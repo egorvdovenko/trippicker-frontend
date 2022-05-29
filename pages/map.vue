@@ -8,6 +8,7 @@
     <yandex-map
       v-else
       :coords="coords"
+      :controls="[]"
       zoom="10"
     >
       <ymap-marker
