@@ -16,10 +16,12 @@
         marker-type="placemark"
       />
     </yandex-map>
+    <TagsBottomSheet />
   </div>
 </template>
 
 <script>
+import { GLOBAL_EVENTS } from '@/core/constants.js'
 
 export default {
   name: 'MapPage',
@@ -42,12 +44,14 @@ export default {
     }
   },
   mounted () {
-    this.$eventBus.$on('reload', this.$fetch)
+    this.$eventBus.$on(GLOBAL_EVENTS.RELOAD, ({ tags }) => {
+      this.getPlaces(tags)
+    })
   },
   methods: {
-    async getPlaces () {
+    async getPlaces (tags) {
       const { data: places } =
-        await this.$api.placesController.getPlaces()
+        await this.$api.placesController.getPlaces(tags)
 
       this.places = places
     }
