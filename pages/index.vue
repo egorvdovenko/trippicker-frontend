@@ -39,7 +39,7 @@ export default {
   clip-path: polygon(0 0, 100% 0%, 0 100%, 0% 100%);
   height: 100%;
   width: 100%;
-  background-color: rgba(0, 0, 0, 0.25);
+  background-color: rgba(0, 0, 0, 0.35);
 }
 
 .app-title {

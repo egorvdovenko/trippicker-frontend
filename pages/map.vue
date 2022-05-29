@@ -12,11 +12,16 @@
     >
       <ymap-marker
         :coords="coords"
-        marker-id="123123"
+        marker-id="place"
         marker-type="placemark"
+        @click="$eventBus.$emit(GLOBAL_EVENTS.PLACE_PREVIEW, { isVisible: true })"
       />
     </yandex-map>
     <TagsBottomSheet />
+    <PlaceBottomSheet
+      v-if="place"
+      v-bind="place"
+    />
   </div>
 </template>
 
@@ -27,6 +32,7 @@ export default {
   name: 'MapPage',
   data () {
     return {
+      GLOBAL_EVENTS,
       places: []
     }
   },
@@ -37,12 +43,12 @@ export default {
     tags () {
       return this.$store.state.tags.items
     },
+    place () {
+      return this.places[Math.floor(Math.random() * this.places.length)]
+    },
     coords () {
-      const place =
-        this.places[Math.floor(Math.random() * this.places.length)]
-
-      return place
-        ? [place.latitude, place.longitude]
+      return this.place
+        ? [this.place.latitude, this.place.longitude]
         : []
     }
   },
