@@ -30,7 +30,8 @@
             x-large
             block
             @click="() => {
-              $eventBus.$emit(GLOBAL_EVENTS.RELOAD, { tags: selectedTags })
+              $store.commit('tags/add', selectedTags)
+              $eventBus.$emit(GLOBAL_EVENTS.RELOAD)
               close()
             }"
           >
@@ -76,6 +77,9 @@ export default {
     this.$eventBus.$on(GLOBAL_EVENTS.TAGS_SEARCH, ({ isVisible }) => {
       this.isVisible = isVisible
     })
+  },
+  destroyed () {
+    this.$eventBus.$off(GLOBAL_EVENTS.TAGS_SEARCH)
   },
   methods: {
     close () {

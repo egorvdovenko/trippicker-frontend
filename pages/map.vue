@@ -34,6 +34,9 @@ export default {
     await this.getPlaces()
   },
   computed: {
+    tags () {
+      return this.$store.state.tags.items
+    },
     coords () {
       const place =
         this.places[Math.floor(Math.random() * this.places.length)]
@@ -44,14 +47,16 @@ export default {
     }
   },
   mounted () {
-    this.$eventBus.$on(GLOBAL_EVENTS.RELOAD, ({ tags }) => {
-      this.getPlaces(tags)
-    })
+    this.$eventBus.$on(GLOBAL_EVENTS.RELOAD, this.getPlaces)
+  },
+  destroyed () {
+    this.$eventBus.$off(GLOBAL_EVENTS.RELOAD)
+    this.$store.commit('tags/clear')
   },
   methods: {
-    async getPlaces (tags) {
+    async getPlaces () {
       const { data: places } =
-        await this.$api.placesController.getPlaces(tags)
+        await this.$api.placesController.getPlaces(this.tags)
 
       this.places = places
     }

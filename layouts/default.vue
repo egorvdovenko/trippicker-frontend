@@ -11,7 +11,7 @@
       <v-spacer />
       <v-btn
         icon
-        @click="$eventBus.$emit(GLOBAL_EVENTS.RELOAD, { tags: [] })"
+        @click="$eventBus.$emit(GLOBAL_EVENTS.RELOAD)"
       >
         <v-icon>mdi-reload</v-icon>
       </v-btn>
