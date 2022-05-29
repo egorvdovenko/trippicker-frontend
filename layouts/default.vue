@@ -5,10 +5,16 @@
       dense
       elevation="4"
     >
-      <v-toolbar-title>Trippicker</v-toolbar-title>
+      <v-toolbar-title>
+        <v-icon>mdi-airplane-marker</v-icon>
+        Trippicker
+      </v-toolbar-title>
       <v-spacer />
-      <v-btn icon>
-        <v-icon>mdi-magnify</v-icon>
+      <v-btn
+        icon
+        @click="$eventBus.$emit('reload')"
+      >
+        <v-icon>mdi-reload</v-icon>
       </v-btn>
       <v-btn icon to="/">
         <v-icon>mdi-home</v-icon>
@@ -36,10 +42,6 @@ export default {
 </script>
 
 <style lang="scss" scoped>
-.root {
-  // height: 100vh;
-}
-
 header {
   z-index: 1;
 }

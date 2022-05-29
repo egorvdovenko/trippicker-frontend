@@ -41,6 +41,9 @@ export default {
         : []
     }
   },
+  mounted () {
+    this.$eventBus.$on('reload', this.$fetch)
+  },
   methods: {
     async getPlaces () {
       const { data: places } =
