@@ -1,19 +1,10 @@
 <template>
   <div class="root">
-    <div
-      v-if="$fetchState.pending"
-      class="loader"
-    >
-      <h2 class="mb-4">
+    <AppLoader v-if="$fetchState.pending">
+      <template #title>
         Picking the trip
-      </h2>
-      <v-progress-circular
-        :size="45"
-        :width="3"
-        color="#272727"
-        indeterminate
-      />
-    </div>
+      </template>
+    </AppLoader>
     <yandex-map
       v-else
       :coords="coords"
@@ -34,14 +25,29 @@ export default {
   name: 'MapPage',
   data () {
     return {
-      coords: null
+      places: []
     }
   },
   async fetch () {
-    const { data: places } = await this.$api.placesController.getPlaces()
-    const place = places[Math.floor(Math.random() * places.length)]
+    await this.getPlaces()
+  },
+  computed: {
+    coords () {
+      const place =
+        this.places[Math.floor(Math.random() * this.places.length)]
 
-    this.coords = [place.latitude, place.longitude]
+      return place
+        ? [place.latitude, place.longitude]
+        : []
+    }
+  },
+  methods: {
+    async getPlaces () {
+      const { data: places } =
+        await this.$api.placesController.getPlaces()
+
+      this.places = places
+    }
   }
 }
 </script>
@@ -54,14 +60,5 @@ export default {
   &::v-deep .ymap-container {
     height: 100%;
   }
-}
-
-.loader {
-  height: 100%;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    flex-direction: column;
-    color: #282828;
 }
 </style>
