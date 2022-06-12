@@ -58,3 +58,28 @@ header {
   z-index: 1;
 }
 </style>
+
+<style lang="scss">
+html {
+  overflow-y: hidden;
+}
+
+* {
+  scrollbar-width: thin;
+  scrollbar-color: #FFFFFF #272727;
+}
+
+*::-webkit-scrollbar {
+  width: 12px;
+}
+
+*::-webkit-scrollbar-track {
+  background: #272727;
+}
+
+*::-webkit-scrollbar-thumb {
+  background-color: #FFFFFF;
+  border-radius: 20px;
+  border: 3px solid #272727;
+}
+</style>
