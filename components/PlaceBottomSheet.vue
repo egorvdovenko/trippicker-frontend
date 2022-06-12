@@ -14,31 +14,39 @@
         <v-col cols="12">
           {{ description }}
         </v-col>
-        <v-col
-          v-for="n in 9"
-          :key="n"
-          class="d-flex child-flex"
-          cols="4"
-        >
-          <v-img
-            :src="`https://picsum.photos/500/300?image=${n * 5 + 10}`"
-            :lazy-src="`https://picsum.photos/10/6?image=${n * 5 + 10}`"
-            aspect-ratio="1"
-            class="grey lighten-2"
+        <v-col cols="12">
+          <v-row
+            class="images-container"
+            dense
           >
-            <template #placeholder>
-              <v-row
-                class="fill-height ma-0"
-                align="center"
-                justify="center"
+            <v-col
+              v-for="(image, index) in images"
+              :key="image.id"
+              class="d-flex child-flex"
+              cols="4"
+              @click="previewIndex = index"
+            >
+              <v-img
+                :src="image.url"
+                :lazy-src="image.url"
+                aspect-ratio="1"
+                class="grey lighten-2"
               >
-                <v-progress-circular
-                  indeterminate
-                  color="grey lighten-5"
-                />
-              </v-row>
-            </template>
-          </v-img>
+                <template #placeholder>
+                  <v-row
+                    class="fill-height ma-0"
+                    align="center"
+                    justify="center"
+                  >
+                    <v-progress-circular
+                      indeterminate
+                      color="grey lighten-5"
+                    />
+                  </v-row>
+                </template>
+              </v-img>
+            </v-col>
+          </v-row>
         </v-col>
         <v-col cols="12">
           <v-btn
@@ -53,6 +61,11 @@
         </v-col>
       </v-row>
     </v-sheet>
+    <CoolLightBox
+      :items="images.map(image => image.url)"
+      :index="previewIndex"
+      @close="previewIndex = null"
+    />
   </v-bottom-sheet>
 </template>
 
@@ -69,12 +82,17 @@ export default {
     description: {
       type: String,
       required: true
+    },
+    images: {
+      type: Array,
+      default: () => ([])
     }
   },
   data () {
     return {
       GLOBAL_EVENTS,
-      isVisible: false
+      isVisible: false,
+      previewIndex: null
     }
   },
   mounted () {
@@ -92,3 +110,10 @@ export default {
   }
 }
 </script>
+
+<style lang="scss" scoped>
+.images-container {
+  max-height: 50vh;
+  overflow-y: auto;
+}
+</style>
