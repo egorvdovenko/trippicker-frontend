@@ -50,7 +50,7 @@ export default {
     coords () {
       return this.place
         ? [this.place.latitude, this.place.longitude]
-        : []
+        : [0, 0]
     }
   },
   mounted () {
@@ -65,7 +65,9 @@ export default {
       const { data: places } =
         await this.$api.placesController.getPlaces(this.tags)
 
-      this.places = places
+      this.places = places.length > 1
+        ? places.filter(place => place.latitude !== this.coords[0] && place.longitude !== this.coords[1])
+        : places
     }
   }
 }
