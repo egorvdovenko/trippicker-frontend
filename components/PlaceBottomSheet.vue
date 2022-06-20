@@ -8,10 +8,16 @@
         class="pa-3 ma-0"
         dense
       >
-        <v-col cols="12">
+        <v-col
+          cols="12"
+          tag="h2"
+        >
           {{ name }}
         </v-col>
-        <v-col cols="12">
+        <v-col
+          cols="12"
+          class="pb-4"
+        >
           {{ description }}
         </v-col>
         <v-col cols="12">
